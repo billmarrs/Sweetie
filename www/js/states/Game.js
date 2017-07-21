@@ -1,6 +1,5 @@
-function warn(msg) {
-    //console.log(msg);
-}
+
+// Utility functions
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -22,17 +21,39 @@ function shuffle(array) {
 }
 
 BasicGame.Game = function (game) {
-
+    //game.debugLevel = 'onscreen';
+    //game.debugLevel = 'console';
+    this.consoleLog = [];
+    this.dconsole = null;
 };
 
 BasicGame.Game.prototype = {
     
+    warn: function(msg) {
+	var type = typeof game.debugLevel;
+	if (type === "undefined") return null;
+	if (game.debugLevel === "onscreen") {
+	    this.consoleLog.unshift(msg);
+	    this.consoleLog = this.consoleLog.slice(0,5); // limit length to 3 lines
+	    this.dconsole.setText(this.consoleLog.reverse().join("\n"));
+	    this.consoleLog.reverse();
+	} else {
+	    console.log(msg);
+	}
+    },
+
     preload: function () {
 	
     },
     
     create: function () {
 
+	if (typeof game.debugLevel !== "undefined" &&
+	    this.game.debugLevel === "onscreen") {
+	    this.dconsole = this.game.add.text(10, this.game.height-150, '',
+					       { font: "20px Arial", fill: "#666666", align: "left" });
+	}
+	
 	this.sweetie = this.add.sprite(this.game.width *.5, this.game.height *.5, 'rbf');
 	this.sweetie.scale.setTo(this.game.sweetiescale);
 	this.sweetie.anchor.set(0.5);
@@ -62,11 +83,12 @@ BasicGame.Game.prototype = {
     },
     
     update: function () {
+
     },
 
     pickMeow: function () {
 	if (this.meows.list.length <= 0) {
-	    warn('shuffling...');
+	    this.warn('shuffling...');
 	    this.meows.list = shuffle(['meow1','meow2','meow3','nastymeow','meow4','wheezymeow','meow5','meow6','meow7','scratchymeow']);
 	}
 	return this.meows.list.pop();
@@ -75,7 +97,7 @@ BasicGame.Game.prototype = {
     meow: function (pointer) {
 	this.sweetie.animations.play('meow');
 	var pick = this.pickMeow();
-	warn(pick);
+	this.warn(pick);
 	this.meows.play(pick);
     },
         
