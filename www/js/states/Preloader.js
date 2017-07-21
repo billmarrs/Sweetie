@@ -19,18 +19,7 @@ BasicGame.Preloader.prototype = {
 	this.preloadBar.anchor.setTo(0.5);
 	this.load.setPreloadSprite(this.preloadBar);
 
-	var ratio = .66666;
-	var rbfw = 450;
-	var rbfh = 500;
-	this.load.spritesheet('rbf', 'assets/images/rbfanim.png', rbfw, rbfh);
-
-	// NYI - Move this into game and have it respond to screen events (like orientation change)
-	// can use sprite.width vs. these hard-coded numbers
-	var desiredw = this.game.width * ratio;
-	var desiredh = this.game.height * ratio;
-	var wscale = desiredw / rbfw;
-	var hscale = desiredh / rbfh;
-	if (wscale < hscale) this.game.sweetiescale = wscale; else this.game.sweetiescale = hscale;
+	this.load.spritesheet('rbf', 'assets/images/rbfanim.png', 450, 500);
 	
 	this.load.audio('meows', ['assets/audio/12meows.ogg', 'assets/audio/12meows.mp3']);
     },
