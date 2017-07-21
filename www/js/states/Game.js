@@ -55,6 +55,8 @@ BasicGame.Game.prototype = {
 	}
 	
 	this.sweetie = this.add.sprite(this.game.width *.5, this.game.height *.5, 'rbf');
+	this.sweetie.origwidth  = this.sweetie.width;
+	this.sweetie.origheight = this.sweetie.height;
 	this.sweetiescale();
 	this.sweetie.anchor.set(0.5);
  	this.sweetie.inputEnabled = true;
@@ -79,19 +81,29 @@ BasicGame.Game.prototype = {
 	this.meows.addMarker('modulatedmeow', 10.853,  .960);
 	this.meows.addMarker('silence',       12.000,  .500);
 	this.meows.list = [];
-	
+
+	this.game.scale.setResizeCallback(this.orientAll, this);
+	this.game.scale.onSizeChange.add(this.orientAll, this);
     },
     
     update: function() {
 
     },
 
+    orientAll:function() {
+	this.warn('orientAll (w/h) = ('+this.game.width+'/'+this.game.height+')');
+	if (this.dconsole) this.dconsole.y = this.game.height-150;
+	this.sweetie.x = this.game.width *.5;
+	this.sweetie.y = this.game.height *.5;
+	this.sweetiescale();
+    },
+    
     sweetiescale: function() {
 	var ratio = .66666;
 	var desiredw = this.game.width * ratio;
 	var desiredh = this.game.height * ratio;
-	var wscale = desiredw / this.sweetie.width;
-	var hscale = desiredh / this.sweetie.height;
+	var wscale = desiredw / this.sweetie.origwidth;
+	var hscale = desiredh / this.sweetie.origheight;
 	var sweetiescale = 1;
 	if (wscale < hscale) sweetiescale = wscale; else sweetiescale = hscale;
 	this.sweetie.scale.setTo(sweetiescale);
