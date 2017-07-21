@@ -20,7 +20,7 @@ function shuffle(array) {
   return array;
 }
 
-BasicGame.Game = function (game) {
+BasicGame.Game = function(game) {
     //game.debugLevel = 'onscreen';
     //game.debugLevel = 'console';
     this.consoleLog = [];
@@ -42,11 +42,11 @@ BasicGame.Game.prototype = {
 	}
     },
 
-    preload: function () {
+    preload: function() {
 	
     },
-    
-    create: function () {
+
+    create: function() {
 
 	if (typeof game.debugLevel !== "undefined" &&
 	    this.game.debugLevel === "onscreen") {
@@ -55,7 +55,7 @@ BasicGame.Game.prototype = {
 	}
 	
 	this.sweetie = this.add.sprite(this.game.width *.5, this.game.height *.5, 'rbf');
-	this.sweetie.scale.setTo(this.game.sweetiescale);
+	this.sweetiescale();
 	this.sweetie.anchor.set(0.5);
  	this.sweetie.inputEnabled = true;
  	// this.sweetie.input.enableDrag(true);
@@ -82,11 +82,22 @@ BasicGame.Game.prototype = {
 	
     },
     
-    update: function () {
+    update: function() {
 
     },
 
-    pickMeow: function () {
+    sweetiescale: function() {
+	var ratio = .66666;
+	var desiredw = this.game.width * ratio;
+	var desiredh = this.game.height * ratio;
+	var wscale = desiredw / this.sweetie.width;
+	var hscale = desiredh / this.sweetie.height;
+	var sweetiescale = 1;
+	if (wscale < hscale) sweetiescale = wscale; else sweetiescale = hscale;
+	this.sweetie.scale.setTo(sweetiescale);
+    },
+
+    pickMeow: function() {
 	if (this.meows.list.length <= 0) {
 	    this.warn('shuffling...');
 	    this.meows.list = shuffle(['meow1','meow2','meow3','nastymeow','meow4','wheezymeow','meow5','meow6','meow7','scratchymeow']);
@@ -94,7 +105,7 @@ BasicGame.Game.prototype = {
 	return this.meows.list.pop();
     },
     
-    meow: function (pointer) {
+    meow: function(pointer) {
 	this.sweetie.animations.play('meow');
 	var pick = this.pickMeow();
 	this.warn(pick);
