@@ -1,25 +1,4 @@
 
-// Utility functions
-
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
 BasicGame.Game = function(game) {
     //game.debugLevel = 'onscreen';
     //game.debugLevel = 'console';
@@ -112,7 +91,7 @@ BasicGame.Game.prototype = {
     pickMeow: function() {
 	if (this.meows.list.length <= 0) {
 	    this.warn('shuffling...');
-	    this.meows.list = shuffle(['meow1','meow2','meow3','nastymeow','meow4','wheezymeow','meow5','meow6','meow7','scratchymeow']);
+	    this.meows.list = Phaser.ArrayUtils.shuffle(['meow1','meow2','meow3','nastymeow','meow4','wheezymeow','meow5','meow6','meow7','scratchymeow']);
 	}
 	return this.meows.list.pop();
     },
