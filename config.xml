@@ -23,18 +23,18 @@
         <icon qualifier="xhdpi" src="res/icons/android/icon-96-xhdpi.png" />
         <icon qualifier="xxhdpi" src="res/icons/android/icon-144-xxhdpi.png" />
         <icon qualifier="xxxhdpi" src="res/icons/android/icon-192-xxxhdpi.png" />
-        <splash density="land-ldpi" src="res/screens/android\drawable-land-ldpi-screen.png" />
-        <splash density="land-mdpi" src="res/screens/android\drawable-land-mdpi-screen.png" />
-        <splash density="land-hdpi" src="res/screens/android\drawable-land-hdpi-screen.png" />
-        <splash density="land-xhdpi" src="res/screens/android\drawable-land-xhdpi-screen.png" />
-        <splash density="land-xxhdpi" src="res/screens/android\drawable-land-xxhdpi-screen.png" />
-        <splash density="land-xxxhdpi" src="res/screens/android\drawable-land-xxxhdpi-screen.png" />
-        <splash density="port-ldpi" src="res/screens/android\drawable-port-ldpi-screen.png" />
-        <splash density="port-mdpi" src="res/screens/android\drawable-port-mdpi-screen.png" />
-        <splash density="port-hdpi" src="res/screens/android\drawable-port-hdpi-screen.png" />
-        <splash density="port-xhdpi" src="res/screens/android\drawable-port-xhdpi-screen.png" />
-        <splash density="port-xxhdpi" src="res/screens/android\drawable-port-xxhdpi-screen.png" />
-        <splash density="port-xxxhdpi" src="res/screens/android\drawable-port-xxxhdpi-screen.png" />
+        <splash density="land-ldpi" src="res/screens/android/drawable-land-ldpi-screen.png" />
+        <splash density="land-mdpi" src="res/screens/android/drawable-land-mdpi-screen.png" />
+        <splash density="land-hdpi" src="res/screens/android/drawable-land-hdpi-screen.png" />
+        <splash density="land-xhdpi" src="res/screens/android/drawable-land-xhdpi-screen.png" />
+        <splash density="land-xxhdpi" src="res/screens/android/drawable-land-xxhdpi-screen.png" />
+        <splash density="land-xxxhdpi" src="res/screens/android/drawable-land-xxxhdpi-screen.png" />
+        <splash density="port-ldpi" src="res/screens/android/drawable-port-ldpi-screen.png" />
+        <splash density="port-mdpi" src="res/screens/android/drawable-port-mdpi-screen.png" />
+        <splash density="port-hdpi" src="res/screens/android/drawable-port-hdpi-screen.png" />
+        <splash density="port-xhdpi" src="res/screens/android/drawable-port-xhdpi-screen.png" />
+        <splash density="port-xxhdpi" src="res/screens/android/drawable-port-xxhdpi-screen.png" />
+        <splash density="port-xxxhdpi" src="res/screens/android/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -77,5 +77,5 @@
     <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.7" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
-    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
 </widget>
