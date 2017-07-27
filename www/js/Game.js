@@ -4,6 +4,10 @@ SweetieGame.Game = function(game) {
     //game.debugLevel = 'console';
     this.consoleLog = [];
     this.dconsole = null;
+
+    // NYI pull money from storage somehow
+    if (typeof V.money === "undefined") V.money = 100;
+    if (typeof V.mood === "undefined") V.mood = 'cranky'; // NYI random
 };
 
 SweetieGame.Game.prototype = {
@@ -32,6 +36,12 @@ SweetieGame.Game.prototype = {
 	    this.dconsole = this.game.add.text(10, this.game.height-150, '',
 					       { font: "20px Arial", fill: "#666666", align: "left" });
 	}
+
+	this.moneyText = this.game.add.text(16, 0, '$'+V.money,
+					    { font: "20px Arial", fill: "#666666", align: "left" });
+
+	this.moneyText = this.game.add.text(this.game.width-150, 0, V.mood,
+					    { font: "20px Arial", fill: "#666666", align: "left" });
 	
 	this.sweetie = this.add.sprite(this.game.width *.5, this.game.height *.5, 'rbf');
 	this.sweetie.origwidth  = this.sweetie.width;
