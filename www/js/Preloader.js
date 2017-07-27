@@ -1,12 +1,12 @@
 
-BasicGame.Preloader = function (game) {
+SweetieGame.Preloader = function (game) {
     
     this.preloadBar = null;
     this.ready = false;
     
 };
 
-BasicGame.Preloader.prototype = {
+SweetieGame.Preloader.prototype = {
     
     init: function () {
 	this.preloadBar = null;

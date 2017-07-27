@@ -1,12 +1,12 @@
 
-BasicGame.Game = function(game) {
+SweetieGame.Game = function(game) {
     //game.debugLevel = 'onscreen';
     //game.debugLevel = 'console';
     this.consoleLog = [];
     this.dconsole = null;
 };
 
-BasicGame.Game.prototype = {
+SweetieGame.Game.prototype = {
     
     warn: function(msg) {
 	var type = typeof game.debugLevel;

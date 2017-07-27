@@ -1,10 +1,10 @@
-var BasicGame = {};
+var SweetieGame = {};
 
-BasicGame.Boot = function (game) {
+SweetieGame.Boot = function (game) {
     
 };
 
-BasicGame.Boot.prototype = {
+SweetieGame.Boot.prototype = {
     
     init: function () {
         this.input.maxPointers = 1;
