@@ -65,6 +65,9 @@
         <splash height="960" src="res/screens/ios/Default@2x~iphone.png" width="640" />
         <splash height="480" src="res/screens/ios/Default~iphone.png" width="320" />
     </platform>
+    <platform name="browser">
+        <preference name="SplashScreen" value="res/screens/android/drawable-port-xxxhdpi-screen.png" />
+    </platform>
     <preference name="xwalkVersion" value="20+" />
     <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
     <preference name="xwalkMode" value="embedded" />
@@ -72,6 +75,7 @@
     <preference name="android-minSdkVersion" value="16" />
     <preference name="SplashScreen" value="none" />
     <preference name="SplashScreenDelay" value="0" />
+    <preference name="ShowSplashScreen" value="false" />
     <engine name="android" spec="^5.2.2" />
     <engine name="browser" spec="^4.1.0" />
     <engine name="ios" spec="^4.4.0" />
