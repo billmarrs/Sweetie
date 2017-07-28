@@ -126,9 +126,9 @@ SweetieGame.Home.prototype = {
 	var desiredh = this.game.height * ratio;
 	var wscale = desiredw / this.sweetie.origwidth;
 	var hscale = desiredh / this.sweetie.origheight;
-	var sweetiescale = 1;
-	if (wscale < hscale) sweetiescale = wscale; else sweetiescale = hscale;
-	this.sweetie.scale.setTo(sweetiescale);
+	var newscale = 1;
+	if (wscale < hscale) newscale = wscale; else newscale = hscale;
+	this.sweetie.scale.setTo(newscale);
     },
     
     dishscale: function() {
@@ -137,9 +137,9 @@ SweetieGame.Home.prototype = {
 	var desiredh = this.game.height * ratio;
 	var wscale = desiredw / this.dish.origwidth;
 	var hscale = desiredh / this.dish.origheight;
-	var dishscale = 1;
-	if (wscale < hscale) dishscale = wscale; else dishscale = hscale;
-	this.dish.scale.setTo(dishscale);
+	var newscale = 1;
+	if (wscale < hscale) newscale = wscale; else newscale = hscale;
+	this.dish.scale.setTo(newscale);
     },
 
     handscale: function() {
@@ -148,9 +148,9 @@ SweetieGame.Home.prototype = {
 	var desiredh = this.game.height * ratio;
 	var wscale = desiredw / this.hand.origwidth;
 	var hscale = desiredh / this.hand.origheight;
-	var handscale = 1;
-	if (wscale < hscale) handscale = wscale; else handscale = hscale;
-	this.hand.scale.setTo(handscale);
+	var newscale = 1;
+	if (wscale < hscale) newscale = wscale; else newscale = hscale;
+	this.hand.scale.setTo(newscale);
     },
 
     pickMeow: function() {
