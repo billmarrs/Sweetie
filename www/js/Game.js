@@ -38,9 +38,11 @@ SweetieGame.Game.prototype = {
 	}
 	
 	this.moneyText = this.add.bitmapText(20, 15, 'Banner', '$'+V.money, 48);
-	this.moneyText.smoothed = false;
+	this.moneyText.tint = 0x00ff00;
 	this.moodText = this.add.bitmapText(this.game.width-150, 15, 'Banner', V.mood, 48);
-	this.moodText.smoothed = false;
+	// NYI random mood init?
+	// NYI vary color of mood based on severity
+	//this.moodText.tint = 0x00ff00;
 	
 	this.sweetie = this.add.sprite(this.game.width *.5, this.game.height *.5, 'rbf');
 	this.sweetie.origwidth  = this.sweetie.width;
@@ -84,6 +86,7 @@ SweetieGame.Game.prototype = {
 	this.sweetie.x = this.game.width *.5;
 	this.sweetie.y = this.game.height *.5;
 	this.sweetiescale();
+	this.moodText.x = this.game.width-150;
     },
     
     sweetiescale: function() {
