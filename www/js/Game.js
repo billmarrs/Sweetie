@@ -4,7 +4,7 @@ SweetieGame.Game = function(game) {
     //game.debugLevel = 'console';
     this.consoleLog = [];
     this.dconsole = null;
-
+    this.padding = 15;
     // NYI pull money from storage somehow
     if (typeof V.money === "undefined") V.money = 100;
     if (typeof V.mood === "undefined") V.mood = 'cranky'; // NYI random
@@ -40,9 +40,11 @@ SweetieGame.Game.prototype = {
 	}
 
 	// Banner text
-	this.moneyText = this.add.bitmapText(20, 15, 'Banner', '$'+V.money, 48);
+	this.moneyText = this.add.bitmapText(this.padding, this.padding, 'Banner', '$'+V.money, 48);
 	this.moneyText.tint = 0x00ff00;
-	this.moodText = this.add.bitmapText(this.game.width-150, 15, 'Banner', V.mood, 48);
+	this.moneyText.anchor.set(0,0);
+	this.moodText = this.add.bitmapText(this.game.width-this.padding, this.padding, 'Banner', V.mood, 48);
+	this.moodText.anchor.set(1,0);
 	// NYI random mood init?
 	// NYI vary color of mood based on severity
 	//this.moodText.tint = 0x00ff00;
@@ -59,12 +61,20 @@ SweetieGame.Game.prototype = {
 	this.sweetie.animations.add('meow', [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 ,0], 20, false);
 
 	// Food Dish
-	this.dish = this.add.sprite(100, this.game.height -70, 'dish');
+	this.dish = this.add.sprite(this.padding, this.game.height-this.padding, 'dish');
 	this.dish.origwidth  = this.dish.width;
 	this.dish.origheight = this.dish.height;
-	this.dish.anchor.set(0.5);
+	this.dish.anchor.set(0,1);
 	this.dish.tint = 0xFFAAAA;
 	this.dishscale();
+	
+	// Petting Hand
+	this.hand = this.add.sprite(this.game.width-this.padding, this.game.height-this.padding, 'hand');
+	this.hand.origwidth  = this.hand.width;
+	this.hand.origheight = this.hand.height;
+	this.hand.anchor.set(1,1);
+	//this.hand.tint = 0xFFAAAA;
+	this.handscale();
 	
 	// Sound
 	this.meows = this.add.audio('meows');
@@ -94,13 +104,16 @@ SweetieGame.Game.prototype = {
 
     orientAll:function() {
 	this.warn('orientAll (w/h) = ('+this.game.width+'/'+this.game.height+')');
-	if (this.dconsole) this.dconsole.y = this.game.height-150;
+	if (this.dconsole) this.dconsole.y = this.game.height-this.padding;
 	this.sweetie.x = this.game.width *.5;
 	this.sweetie.y = this.game.height *.5;
 	this.sweetiescale();
-	this.dish.y = this.game.height -70;
+	this.dish.y = this.game.height - this.padding;
 	this.dishscale();
-	this.moodText.x = this.game.width-150;
+	this.hand.x = this.game.width-this.padding; 
+	this.hand.y = this.game.height-this.padding;
+	this.handscale();
+	this.moodText.x = this.game.width-this.padding;
     },
     
     sweetiescale: function() {
@@ -123,6 +136,17 @@ SweetieGame.Game.prototype = {
 	var dishscale = 1;
 	if (wscale < hscale) dishscale = wscale; else dishscale = hscale;
 	this.dish.scale.setTo(dishscale);
+    },
+
+    handscale: function() {
+	var ratio = .2;
+	var desiredw = this.game.width * ratio;
+	var desiredh = this.game.height * ratio;
+	var wscale = desiredw / this.hand.origwidth;
+	var hscale = desiredh / this.hand.origheight;
+	var handscale = 1;
+	if (wscale < hscale) handscale = wscale; else handscale = hscale;
+	this.hand.scale.setTo(handscale);
     },
 
     pickMeow: function() {
