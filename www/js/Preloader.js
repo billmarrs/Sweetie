@@ -35,7 +35,7 @@ SweetieGame.Preloader.prototype = {
 	
 	if (this.cache.isSoundDecoded('meows') && this.ready == false) {
 	    this.ready = true;
-	    this.state.start('Game');
+	    this.state.start('Home');
 	}
     }
 

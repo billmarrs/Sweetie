@@ -1,5 +1,5 @@
 
-SweetieGame.Game = function(game) {
+SweetieGame.Home = function(game) {
     //game.debugLevel = 'onscreen';
     //game.debugLevel = 'console';
     this.consoleLog = [];
@@ -10,7 +10,7 @@ SweetieGame.Game = function(game) {
     if (typeof V.mood === "undefined") V.mood = 'cranky'; // NYI random
 };
 
-SweetieGame.Game.prototype = {
+SweetieGame.Home.prototype = {
     
     warn: function(msg) {
 	var type = typeof game.debugLevel;
@@ -67,6 +67,8 @@ SweetieGame.Game.prototype = {
 	this.dish.anchor.set(0,1);
 	this.dish.tint = 0xFFAAAA;
 	this.dishscale();
+	this.dish.inputEnabled = true;
+	this.dish.events.onInputDown.add(this.touchDish, this);
 	
 	// Petting Hand
 	this.hand = this.add.sprite(this.game.width-this.padding, this.game.height-this.padding, 'hand');
@@ -75,6 +77,8 @@ SweetieGame.Game.prototype = {
 	this.hand.anchor.set(1,1);
 	//this.hand.tint = 0xFFAAAA;
 	this.handscale();
+	this.hand.inputEnabled = true;
+	this.hand.events.onInputDown.add(this.touchHand, this);
 	
 	// Sound
 	this.meows = this.add.audio('meows');
@@ -162,6 +166,14 @@ SweetieGame.Game.prototype = {
 	var pick = this.pickMeow();
 	this.warn(pick);
 	this.meows.play(pick);
+    },
+
+    touchDish: function(pointer) {
+	this.state.start('Food');
+    },
+
+    touchHand: function(pointer) {
+	this.state.start('Pet');
     },
 
 // debug sounds
