@@ -36,12 +36,11 @@ SweetieGame.Game.prototype = {
 	    this.dconsole = this.game.add.text(10, this.game.height-150, '',
 					       { font: "20px Arial", fill: "#666666", align: "left" });
 	}
-
-	this.moneyText = this.game.add.text(16, 0, '$'+V.money,
-					    { font: "20px Arial", fill: "#666666", align: "left" });
-
-	this.moneyText = this.game.add.text(this.game.width-150, 0, V.mood,
-					    { font: "20px Arial", fill: "#666666", align: "left" });
+	
+	this.moneyText = this.add.bitmapText(20, 15, 'Banner', '$'+V.money, 48);
+	this.moneyText.smoothed = false;
+	this.moodText = this.add.bitmapText(this.game.width-150, 15, 'Banner', V.mood, 48);
+	this.moodText.smoothed = false;
 	
 	this.sweetie = this.add.sprite(this.game.width *.5, this.game.height *.5, 'rbf');
 	this.sweetie.origwidth  = this.sweetie.width;
