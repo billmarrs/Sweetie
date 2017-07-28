@@ -14,14 +14,17 @@ SweetieGame.Preloader.prototype = {
     },
     
     preload: function () {
+	this.load.path = 'assets/';
 	
 	this.preloadBar = this.add.sprite(this.game.width / 2, this.game.height / 2, 'preloaderBar');		
 	this.preloadBar.anchor.setTo(0.5);
 	this.load.setPreloadSprite(this.preloadBar);
-
-	this.load.spritesheet('rbf', 'assets/images/rbfanim.png', 450, 500);
 	
-	this.load.audio('meows', ['assets/audio/12meows.ogg', 'assets/audio/12meows.mp3']);
+ 	this.load.bitmapFont('Banner', 'fonts/Lumberjack_0.png', 'fonts/Lumberjack.fnt');
+	
+	this.load.spritesheet('rbf', 'images/rbfanim.png', 450, 500);
+	
+	this.load.audio('meows', ['audio/12meows.ogg', 'audio/12meows.mp3']);
     },
     
     create: function () {
