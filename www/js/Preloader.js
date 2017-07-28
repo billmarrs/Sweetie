@@ -23,6 +23,7 @@ SweetieGame.Preloader.prototype = {
  	this.load.bitmapFont('Banner', 'fonts/Lumberjack_0.png', 'fonts/Lumberjack.fnt');
 	this.load.spritesheet('rbf', 'images/rbfanim.png', 450, 500);
 	this.load.image('dish', 'images/dish.png');
+	this.load.image('hand', 'images/hand.png');
 	this.load.audio('meows', ['audio/12meows.ogg', 'audio/12meows.mp3']);
     },
     
