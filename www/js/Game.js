@@ -31,19 +31,23 @@ SweetieGame.Game.prototype = {
 
     create: function() {
 
+	//this.game.stage.backgroundColor = "#444444";
+	
 	if (typeof game.debugLevel !== "undefined" &&
 	    this.game.debugLevel === "onscreen") {
 	    this.dconsole = this.game.add.text(10, this.game.height-150, '',
 					       { font: "20px Arial", fill: "#666666", align: "left" });
 	}
-	
+
+	// Banner text
 	this.moneyText = this.add.bitmapText(20, 15, 'Banner', '$'+V.money, 48);
 	this.moneyText.tint = 0x00ff00;
 	this.moodText = this.add.bitmapText(this.game.width-150, 15, 'Banner', V.mood, 48);
 	// NYI random mood init?
 	// NYI vary color of mood based on severity
 	//this.moodText.tint = 0x00ff00;
-	
+
+	// Sweetie!
 	this.sweetie = this.add.sprite(this.game.width *.5, this.game.height *.5, 'rbf');
 	this.sweetie.origwidth  = this.sweetie.width;
 	this.sweetie.origheight = this.sweetie.height;
@@ -52,9 +56,17 @@ SweetieGame.Game.prototype = {
  	this.sweetie.inputEnabled = true;
  	// this.sweetie.input.enableDrag(true);
 	this.sweetie.events.onInputDown.add(this.meow, this);
-
 	this.sweetie.animations.add('meow', [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 ,0], 20, false);
 
+	// Food Dish
+	this.dish = this.add.sprite(100, this.game.height -70, 'dish');
+	this.dish.origwidth  = this.dish.width;
+	this.dish.origheight = this.dish.height;
+	this.dish.anchor.set(0.5);
+	this.dish.tint = 0xFFAAAA;
+	this.dishscale();
+	
+	// Sound
 	this.meows = this.add.audio('meows');
 	this.meows.allowMultiple = true;
 	this.meows.addMarker('meow1',           .051,  .909);
@@ -86,6 +98,8 @@ SweetieGame.Game.prototype = {
 	this.sweetie.x = this.game.width *.5;
 	this.sweetie.y = this.game.height *.5;
 	this.sweetiescale();
+	this.dish.y = this.game.height -70;
+	this.dishscale();
 	this.moodText.x = this.game.width-150;
     },
     
@@ -98,6 +112,17 @@ SweetieGame.Game.prototype = {
 	var sweetiescale = 1;
 	if (wscale < hscale) sweetiescale = wscale; else sweetiescale = hscale;
 	this.sweetie.scale.setTo(sweetiescale);
+    },
+    
+    dishscale: function() {
+	var ratio = .2;
+	var desiredw = this.game.width * ratio;
+	var desiredh = this.game.height * ratio;
+	var wscale = desiredw / this.dish.origwidth;
+	var hscale = desiredh / this.dish.origheight;
+	var dishscale = 1;
+	if (wscale < hscale) dishscale = wscale; else dishscale = hscale;
+	this.dish.scale.setTo(dishscale);
     },
 
     pickMeow: function() {
