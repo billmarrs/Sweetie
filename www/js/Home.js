@@ -1,6 +1,6 @@
 
 SweetieGame.Home = function(game) {
-    //game.debugLevel = 'onscreen';
+    game.debugLevel = 'onscreen';
     //game.debugLevel = 'console';
     this.consoleLog = [];
     this.dconsole = null;
@@ -12,19 +12,6 @@ SweetieGame.Home = function(game) {
 
 SweetieGame.Home.prototype = {
     
-    warn: function(msg) {
-	var type = typeof game.debugLevel;
-	if (type === "undefined") return null;
-	if (game.debugLevel === "onscreen") {
-	    this.consoleLog.unshift(msg);
-	    this.consoleLog = this.consoleLog.slice(0,5); // limit length to 3 lines
-	    this.dconsole.setText(this.consoleLog.reverse().join("\n"));
-	    this.consoleLog.reverse();
-	} else {
-	    console.log(msg);
-	}
-    },
-
     preload: function() {
 	
     },
@@ -35,14 +22,16 @@ SweetieGame.Home.prototype = {
 	
 	if (typeof game.debugLevel !== "undefined" &&
 	    this.game.debugLevel === "onscreen") {
-	    this.dconsole = this.game.add.text(10, this.game.height-150, '',
+	    this.dconsole = this.game.add.text(this.padding, this.padding, '',
 					       { font: "20px Arial", fill: "#666666", align: "left" });
+	    this.dconsole.setText(V.consoleLog.reverse().join("\n"));
 	}
 
-	// Banner text
-	this.moneyText = this.add.bitmapText(this.padding, this.padding, 'Banner', '$'+V.money, 48);
-	this.moneyText.tint = 0x00ff00;
-	this.moneyText.anchor.set(0,0);
+// 	// Banner text
+// 	this.moneyText = this.add.bitmapText(this.padding, this.padding, 'Banner', '$'+V.money, 48);
+// 	this.moneyText.tint = 0x00ff00;
+// 	this.moneyText.anchor.set(0,0);
+
 	this.moodText = this.add.bitmapText(this.game.width-this.padding, this.padding, 'Banner', V.mood, 48);
 	this.moodText.anchor.set(1,0);
 	// NYI random mood init?
@@ -103,12 +92,14 @@ SweetieGame.Home.prototype = {
     },
     
     update: function() {
-
+	if (V.consoleUpdate) {
+	    this.dconsole.setText(V.consoleLog.reverse().join("\n"));
+	    V.consoleUpdate = false;
+	}
     },
 
     orientAll:function() {
-	this.warn('orientAll (w/h) = ('+this.game.width+'/'+this.game.height+')');
-	if (this.dconsole) this.dconsole.y = this.game.height-this.padding;
+	warn('orientAll (w/h) = ('+this.game.width+'/'+this.game.height+')');
 	this.sweetie.x = this.game.width *.5;
 	this.sweetie.y = this.game.height *.5;
 	this.sweetiescale();
@@ -155,7 +146,7 @@ SweetieGame.Home.prototype = {
 
     pickMeow: function() {
 	if (this.meows.list.length <= 0) {
-	    this.warn('shuffling...');
+	    warn('shuffling...');
 	    this.meows.list = Phaser.ArrayUtils.shuffle(['meow1','meow2','meow3','nastymeow','meow4','wheezymeow','meow5','meow6','meow7','scratchymeow']);
 	}
 	return this.meows.list.pop();
@@ -164,7 +155,7 @@ SweetieGame.Home.prototype = {
     meow: function(pointer) {
 	this.sweetie.animations.play('meow');
 	var pick = this.pickMeow();
-	this.warn(pick);
+	warn('meow pick = '+pick);
 	this.meows.play(pick);
     },
 
