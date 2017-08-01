@@ -1,13 +1,7 @@
 
 SweetieGame.Home = function(game) {
-    game.debugLevel = 'onscreen';
-    //game.debugLevel = 'console';
-    this.consoleLog = [];
     this.dconsole = null;
     this.padding = 15;
-    // NYI pull money from storage somehow
-    if (typeof V.money === "undefined") V.money = 100;
-    if (typeof V.mood === "undefined") V.mood = 'cranky'; // NYI random
 };
 
 SweetieGame.Home.prototype = {
@@ -19,12 +13,10 @@ SweetieGame.Home.prototype = {
     create: function() {
 
 	//this.game.stage.backgroundColor = "#444444";
-	
-	if (typeof game.debugLevel !== "undefined" &&
-	    this.game.debugLevel === "onscreen") {
+	if (V.onScreenDebug()) {
 	    this.dconsole = this.game.add.text(this.padding, this.padding, '',
 					       { font: "20px Arial", fill: "#666666", align: "left" });
-	    this.dconsole.setText(V.consoleLog.reverse().join("\n"));
+	    this.dconsole.setText(V.displayLogClearUpdate());
 	}
 
 // 	// Banner text
@@ -92,14 +84,11 @@ SweetieGame.Home.prototype = {
     },
     
     update: function() {
-	if (V.consoleUpdate) {
-	    this.dconsole.setText(V.consoleLog.reverse().join("\n"));
-	    V.consoleUpdate = false;
-	}
+	if (V.consoleUpdate) this.dconsole.setText(V.displayLogClearUpdate());
     },
 
     orientAll:function() {
-	warn('orientAll (w/h) = ('+this.game.width+'/'+this.game.height+')');
+	V.warn('orientAll (w/h) = ('+this.game.width+'/'+this.game.height+')');
 	this.sweetie.x = this.game.width *.5;
 	this.sweetie.y = this.game.height *.5;
 	this.sweetiescale();
@@ -146,7 +135,7 @@ SweetieGame.Home.prototype = {
 
     pickMeow: function() {
 	if (this.meows.list.length <= 0) {
-	    warn('shuffling...');
+	    V.warn('shuffling...');
 	    this.meows.list = Phaser.ArrayUtils.shuffle(['meow1','meow2','meow3','nastymeow','meow4','wheezymeow','meow5','meow6','meow7','scratchymeow']);
 	}
 	return this.meows.list.pop();
@@ -155,21 +144,23 @@ SweetieGame.Home.prototype = {
     meow: function(pointer) {
 	this.sweetie.animations.play('meow');
 	var pick = this.pickMeow();
-	warn('meow pick = '+pick);
+	V.warn('meow pick = '+pick);
 	this.meows.play(pick);
     },
 
     touchDish: function(pointer) {
+	V.warn('touchDish');
 	this.state.start('Food');
     },
 
     touchHand: function(pointer) {
+	V.warn('touchHand');
 	this.state.start('Pet');
     },
 
-// debug sounds
-//     render: function() {
-// 	game.debug.soundInfo(this.meows, 20, 32);
-//     }
+    render: function() {
+	//game.debug.spriteInfo(this.sweetie, this.padding, this.padding);
+ 	//game.debug.soundInfo(this.meows, this.padding, this.game.height/2);
+    }
 
 };
