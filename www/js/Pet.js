@@ -42,7 +42,6 @@ SweetieGame.Pet.prototype = {
 	V.warn('orientAll (w/h) = ('+this.game.width+'/'+this.game.height+')');
 	this.moodText.x = this.game.width-this.padding;
     },
-	//this.game.stage.backgroundColor = "#444444";
 
     goHome: function(pointer) {
 	V.warn('goHome');
