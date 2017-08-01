@@ -1,9 +1,7 @@
 
 SweetieGame.Food = function(game) {
+    this.dconsole = null;
     this.padding = 15;
-    // NYI pull money from storage somehow
-    if (typeof V.money === "undefined") V.money = 100;
-    if (typeof V.mood === "undefined") V.mood = 'cranky'; // NYI random
 };
 
 SweetieGame.Food.prototype = {
@@ -14,11 +12,10 @@ SweetieGame.Food.prototype = {
 
     create: function() {
 
-	if (typeof game.debugLevel !== "undefined" &&
-	    this.game.debugLevel === "onscreen") {
+	if (V.onScreenDebug()) {
 	    this.dconsole = this.game.add.text(this.padding, this.padding, '',
 					       { font: "20px Arial", fill: "#666666", align: "left" });
-	    this.dconsole.setText(V.consoleLog.reverse().join("\n"));
+	    this.dconsole.setText(V.displayLogClearUpdate());
 	}
 
 	this.nyi = this.add.bitmapText(this.game.width/2, this.game.height/2, 'Banner', 'NYI Food', 48);
@@ -38,18 +35,16 @@ SweetieGame.Food.prototype = {
     },
     
     update: function() {
-	if (V.consoleUpdate) {
-	    this.dconsole.setText(V.consoleLog.reverse().join("\n"));
-	    V.consoleUpdate = false;
-	}
+	if (V.consoleUpdate) this.dconsole.setText(V.displayLogClearUpdate());
     },
 
     orientAll:function() {
-	warn('orientAll (w/h) = ('+this.game.width+'/'+this.game.height+')');
+	V.warn('orientAll (w/h) = ('+this.game.width+'/'+this.game.height+')');
 	this.moodText.x = this.game.width-this.padding;
     },
 
     goHome: function(pointer) {
+	V.warn('goHome');
 	this.state.start('Home');
     },
     
