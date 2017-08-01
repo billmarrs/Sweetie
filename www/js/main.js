@@ -2,9 +2,40 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 var game = new Phaser.Game("100%", "100%", Phaser.AUTO);
 
-// place for persistent storage (like score), accessible from any state
-var V = {};
-V.consoleLog = [];
+// Persistent storage/utility object
+var V = {
+    mood: 'cranky',
+
+    debugLevel: "onscreen", // null to disable, "onscreen" or anything else for console logging
+
+    consoleLog: ['start'],
+    consoleUpdate: false,
+    
+    warn: function(msg) {
+	var type = typeof this.debugLevel;
+	if (type === "undefined") return null;
+	if (this.debugLevel === "onscreen") {
+	    this.consoleLog.unshift(msg);
+	    this.consoleLog = this.consoleLog.slice(0,5);
+	    this.consoleUpdate = true;
+	} else {
+	    console.log(msg);
+	}
+    },
+
+    onScreenDebug: function() {
+	console.log('onScreenDebug = '+(typeof this.debugLevel !== "undefined" &&
+					this.debugLevel === "onscreen"));
+	
+	return (typeof this.debugLevel !== "undefined" &&
+		this.debugLevel === "onscreen");
+    },
+    
+    displayLogClearUpdate: function() {
+	this.consoleUpdate = false;
+	return this.consoleLog.slice().reverse().join("\n");
+    }
+}
 
 game.state.add('Boot', SweetieGame.Boot);
 game.state.add('Preloader', SweetieGame.Preloader);
@@ -14,16 +45,4 @@ game.state.add('Pet', SweetieGame.Pet);
 
 function onDeviceReady() {
     game.state.start('Boot');
-}
-
-function warn(msg) {
-    var type = typeof game.debugLevel;
-    if (type === "undefined") return null;
-    if (game.debugLevel === "onscreen") {
-	V.consoleLog.unshift(msg);
-	V.consoleLog = V.consoleLog.slice(0,5); // limit length to 3 lines
-	V.consoleUpdate = true;
-    } else {
-	console.log(msg);
-    }
 }
