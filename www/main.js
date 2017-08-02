@@ -4,28 +4,27 @@ var game = new Phaser.Game("100%", "100%", Phaser.AUTO);
 var V = {
     mood: 4,
     game: null,
-    debugLevel: null, // null to disable, "onscreen" or anything else for console logging
+    debugLevel: "off", // "onscreen", "console" anything else is no logging
     consoleLog: ['start'],
     consoleUpdate: false,
     
     warn: function(msg) {
-	var type = typeof this.debugLevel;
-	if (type === "undefined") return null;
-	if (this.debugLevel === "onscreen") {
+	switch(this.debugLevel) {
+	case "onscreen":
 	    this.consoleLog.unshift(msg);
 	    this.consoleLog = this.consoleLog.slice(0,5);
 	    this.consoleUpdate = true;
-	} else {
+	    break;
+	case "console":
 	    console.log(msg);
+	    break;
+	default:
+	    break;
 	}
     },
 
     onScreenDebug: function() {
-	console.log('onScreenDebug = '+(typeof this.debugLevel !== "undefined" &&
-					this.debugLevel === "onscreen"));
-	
-	return (typeof this.debugLevel !== "undefined" &&
-		this.debugLevel === "onscreen");
+	return this.debugLevel === "onscreen";
     },
     
     displayLogClearUpdate: function() {
@@ -40,7 +39,7 @@ var V = {
 	var hscale = desiredh / origheight;
 	var newscale = 1;
 	if (wscale < hscale) newscale = wscale; else newscale = hscale;
-	V.warn('scaler('+ratio+', '+origwidth+', '+origheight+') = '+newscale);
+	this.warn('scaler('+ratio+', '+origwidth+', '+origheight+') = '+newscale);
 	return newscale;
     },
     
