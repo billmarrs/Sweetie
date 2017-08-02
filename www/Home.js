@@ -24,8 +24,9 @@ SweetieGame.Home.prototype = {
 // 	this.moneyText.tint = 0x00ff00;
 // 	this.moneyText.anchor.set(0,0);
 
-	this.moodText = this.add.bitmapText(this.game.width-this.padding, this.padding, 'Banner', V.mood, 48);
+	this.moodText = this.add.bitmapText(this.game.width-this.padding, this.padding, 'Banner', V.moodToString(), 48);
 	this.moodText.anchor.set(1,0);
+	this.updateMoodDisplay();
 	// NYI random mood init?
 	// NYI vary color of mood based on severity
 	//this.moodText.tint = 0x00ff00;
@@ -38,7 +39,7 @@ SweetieGame.Home.prototype = {
 	this.sweetie.anchor.set(0.5);
  	this.sweetie.inputEnabled = true;
  	// this.sweetie.input.enableDrag(true);
-	this.sweetie.events.onInputDown.add(this.meow, this);
+	this.sweetie.events.onInputDown.add(this.moodDecline, this);
 	this.sweetie.animations.add('meow', [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 ,0], 20, false);
 
 	// Food Dish
@@ -81,6 +82,10 @@ SweetieGame.Home.prototype = {
 
 	this.game.scale.setResizeCallback(this.orientAll, this);
 	this.game.scale.onSizeChange.add(this.orientAll, this);
+
+	this.timer = this.game.time.create(false);
+	this.timer.loop(5000, this.moodDecline, this);
+	this.timer.start();
     },
     
     update: function() {
@@ -141,7 +146,7 @@ SweetieGame.Home.prototype = {
 	return this.meows.list.pop();
     },
     
-    meow: function(pointer) {
+    meow: function() {
 	this.sweetie.animations.play('meow');
 	var pick = this.pickMeow();
 	V.warn('meow pick = '+pick);
@@ -158,6 +163,17 @@ SweetieGame.Home.prototype = {
 	this.state.start('Pet');
     },
 
+    updateMoodDisplay: function() {
+	this.moodText.tint = V.moodToTint();
+	this.moodText.setText(V.moodToString());
+    },
+    
+    moodDecline: function() {
+	V.lowerMood();
+	this.updateMoodDisplay();
+	this.meow();
+    },
+    
     render: function() {
 	//game.debug.spriteInfo(this.sweetie, this.padding, this.padding);
  	//game.debug.soundInfo(this.meows, this.padding, this.game.height/2);
