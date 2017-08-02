@@ -104,38 +104,17 @@ SweetieGame.Home.prototype = {
 	this.handscale();
 	this.moodText.x = this.game.width-this.padding;
     },
-    
+
     sweetiescale: function() {
-	var ratio = .66666;
-	var desiredw = this.game.width * ratio;
-	var desiredh = this.game.height * ratio;
-	var wscale = desiredw / this.sweetie.origwidth;
-	var hscale = desiredh / this.sweetie.origheight;
-	var newscale = 1;
-	if (wscale < hscale) newscale = wscale; else newscale = hscale;
-	this.sweetie.scale.setTo(newscale);
+	this.sweetie.scale.setTo(V.scaler(.666, this.sweetie.origwidth, this.sweetie.origheight));
     },
     
     dishscale: function() {
-	var ratio = .2;
-	var desiredw = this.game.width * ratio;
-	var desiredh = this.game.height * ratio;
-	var wscale = desiredw / this.dish.origwidth;
-	var hscale = desiredh / this.dish.origheight;
-	var newscale = 1;
-	if (wscale < hscale) newscale = wscale; else newscale = hscale;
-	this.dish.scale.setTo(newscale);
+	this.dish.scale.setTo(V.scaler(.2, this.dish.origwidth, this.dish.origheight));
     },
 
     handscale: function() {
-	var ratio = .2;
-	var desiredw = this.game.width * ratio;
-	var desiredh = this.game.height * ratio;
-	var wscale = desiredw / this.hand.origwidth;
-	var hscale = desiredh / this.hand.origheight;
-	var newscale = 1;
-	if (wscale < hscale) newscale = wscale; else newscale = hscale;
-	this.hand.scale.setTo(newscale);
+	this.hand.scale.setTo(V.scaler(.2, this.hand.origwidth, this.hand.origheight));
     },
 
     pickMeow: function() {
