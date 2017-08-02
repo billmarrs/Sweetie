@@ -4,7 +4,7 @@ var game = new Phaser.Game("100%", "100%", Phaser.AUTO);
 var V = {
     mood: 'cranky',
 
-    debugLevel: "onscreen", // null to disable, "onscreen" or anything else for console logging
+    debugLevel: null, // null to disable, "onscreen" or anything else for console logging
 
     consoleLog: ['start'],
     consoleUpdate: false,
