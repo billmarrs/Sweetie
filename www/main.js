@@ -3,7 +3,7 @@ var game = new Phaser.Game("100%", "100%", Phaser.AUTO);
 // Persistent storage/utility object
 var V = {
     mood: 4,
-
+    game: null,
     debugLevel: null, // null to disable, "onscreen" or anything else for console logging
     consoleLog: ['start'],
     consoleUpdate: false,
@@ -33,6 +33,17 @@ var V = {
 	return this.consoleLog.slice().reverse().join("\n");
     },
 
+    scaler: function(ratio, origwidth, origheight) {
+	var desiredw = this.game.width * ratio;
+	var desiredh = this.game.height * ratio;
+	var wscale = desiredw / origwidth;
+	var hscale = desiredh / origheight;
+	var newscale = 1;
+	if (wscale < hscale) newscale = wscale; else newscale = hscale;
+	V.warn('scaler('+ratio+', '+origwidth+', '+origheight+') = '+newscale);
+	return newscale;
+    },
+    
     moodToString: function() {
 	switch(this.mood) {
 	case 0:
@@ -87,6 +98,8 @@ var V = {
 	}
     },
 }
+
+V.game = game;
 
 game.state.add('Boot', SweetieGame.Boot);
 game.state.add('Preloader', SweetieGame.Preloader);
