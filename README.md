@@ -13,3 +13,5 @@ o "cordova prepare" to set things up (will install requirements)
 o "cordova run browser" to see a local in-browser version of the app (meow).
 
 I've built and tested this on ios and Android 6.0.1.
+
+http://gametz.com/Sweetie/www/ for live example.
