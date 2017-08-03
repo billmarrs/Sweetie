@@ -2,6 +2,7 @@
 SweetieGame.Home = function(game) {
     this.dconsole = null;
     this.padding = 15;
+    this.gameOvered = false;
 };
 
 SweetieGame.Home.prototype = {
@@ -11,7 +12,8 @@ SweetieGame.Home.prototype = {
     },
 
     create: function() {
-
+	this.gameOvered = false;
+	
 	//this.game.stage.backgroundColor = "#444444";
 	if (V.onScreenDebug()) {
 	    this.dconsole = this.game.add.text(this.padding, this.padding, '',
@@ -94,7 +96,19 @@ SweetieGame.Home.prototype = {
     },
 
     gameOver: function() {
-	// NYI graphic showing Game Over, etc.
+	if (!this.gameOvered) {
+	    V.warn('gameOver');
+	    this.gameover = this.add.bitmapText(this.game.width/2, this.game.height/2, 'Banner', 'Game Over', 48);
+	    this.gameover.anchor.set(.5);
+	    this.tween = this.game.add.tween(this.sweetie).to( { alpha: 0 }, 2000, "Linear", true);
+	    this.tween.onComplete.add(this.backToMenu, this);
+	    this.meows.play('yowl');
+	    this.gameOvered = true;
+	}
+    },
+
+    backToMenu: function() {
+	V.warn('backToMenu');
 	this.state.start('Menu');
     },
     
