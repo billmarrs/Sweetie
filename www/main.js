@@ -7,6 +7,10 @@ var V = {
     debugLevel: "off", // "onscreen", "console" anything else is no logging
     consoleLog: ['start'],
     consoleUpdate: false,
+
+    reset: function() {
+	this.mood = 4;
+    },
     
     warn: function(msg) {
 	switch(this.debugLevel) {
