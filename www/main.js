@@ -71,6 +71,10 @@ var V = {
     lowerMood: function() {
 	if (this.mood > 0) this.mood--;
     },
+
+    isGameOver: function() {
+	return (this.mood == 0);
+    },
     
     moodToTint: function() {
 	switch(this.mood) {
@@ -102,6 +106,7 @@ V.game = game;
 
 game.state.add('Boot', SweetieGame.Boot);
 game.state.add('Preloader', SweetieGame.Preloader);
+game.state.add('Menu', SweetieGame.Menu);
 game.state.add('Home', SweetieGame.Home);
 game.state.add('Food', SweetieGame.Food);
 game.state.add('Pet', SweetieGame.Pet);
