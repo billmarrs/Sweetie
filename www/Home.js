@@ -90,8 +90,14 @@ SweetieGame.Home.prototype = {
     
     update: function() {
 	if (V.consoleUpdate) this.dconsole.setText(V.displayLogClearUpdate());
+	if (V.isGameOver()) this.gameOver();
     },
 
+    gameOver: function() {
+	// NYI graphic showing Game Over, etc.
+	this.state.start('Menu');
+    },
+    
     orientAll:function() {
 	V.warn('orientAll (w/h) = ('+this.game.width+'/'+this.game.height+')');
 	this.sweetie.x = this.game.width *.5;
