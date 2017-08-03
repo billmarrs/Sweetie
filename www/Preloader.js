@@ -20,7 +20,7 @@ SweetieGame.Preloader.prototype = {
 	this.preloadBar.anchor.setTo(0.5);
 	this.load.setPreloadSprite(this.preloadBar);
 	console.log('Preloader preload');
- 	this.load.bitmapFont('Banner', 'fonts/Lumberjack_0.png', 'fonts/Lumberjack.fnt');
+ 	this.load.bitmapFont('Banner', 'fonts/Lumberjack.png', 'fonts/Lumberjack.fnt');
 	this.load.spritesheet('rbf', 'images/rbfanim.png', 450, 500);
 	this.load.image('logo', 'images/logo.png');
 	this.load.image('dish', 'images/dish.png');
