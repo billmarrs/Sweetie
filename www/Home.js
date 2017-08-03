@@ -14,7 +14,8 @@ SweetieGame.Home.prototype = {
     create: function() {
 	this.gameOvered = false;
 	
-	//this.game.stage.backgroundColor = "#444444";
+	this.game.stage.backgroundColor = "#444444";
+	
 	if (V.onScreenDebug()) {
 	    this.dconsole = this.game.add.text(this.padding, this.padding, '',
 					       { font: "20px Arial", fill: "#666666", align: "left" });
@@ -98,7 +99,7 @@ SweetieGame.Home.prototype = {
     gameOver: function() {
 	if (!this.gameOvered) {
 	    V.warn('gameOver');
-	    this.gameover = this.add.bitmapText(this.game.width/2, this.game.height/2, 'Banner', 'Game Over', 48);
+	    this.gameover = this.add.bitmapText(this.game.width/2, this.game.height/2, 'Banner', 'Game Over', 96);
 	    this.gameover.anchor.set(.5);
 	    this.tween = this.game.add.tween(this.sweetie).to( { alpha: 0 }, 2000, "Linear", true);
 	    this.tween.onComplete.add(this.backToMenu, this);
