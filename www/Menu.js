@@ -47,6 +47,7 @@ SweetieGame.Menu.prototype = {
     
     goHome: function(pointer) {
 	V.warn('goHome');
+	V.reset();
 	this.state.start('Home');
     },
     
