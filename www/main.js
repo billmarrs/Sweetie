@@ -3,14 +3,21 @@ var game = new Phaser.Game("100%", "100%", Phaser.AUTO);
 // Persistent storage/utility object
 var V = {
     mood: 4,
-    maxmood: 10,
+    maxmood: 5,
     game: null,
-    debugLevel: "onscreen", // "onscreen", "console" anything else is no logging
+    debugLevel: "off", // "onscreen", "console" anything else is no logging
     consoleLog: ['start'],
     consoleUpdate: false,
 
     reset: function() {
 	this.mood = 4;
+    },
+
+    toggleDebug: function() {
+	if (this.debugLevel === "onscreen")
+	    this.debugLevel = "off";
+	else
+	    this.debugLevel = "onscreen";
     },
     
     warn: function(msg) {

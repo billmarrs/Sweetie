@@ -16,11 +16,7 @@ SweetieGame.Home.prototype = {
 	
 	this.game.stage.backgroundColor = "#444444";
 	
-	if (V.onScreenDebug()) {
-	    this.dconsole = this.game.add.text(this.padding, this.padding, '',
-					       { font: "20px Arial", fill: "#666666", align: "left" });
-	    this.dconsole.setText(V.displayLogClearUpdate());
-	}
+	if (V.onScreenDebug()) this.createDebugText();
 
 // 	// Banner text
 // 	this.moneyText = this.add.bitmapText(this.padding, this.padding, 'Banner', '$'+V.money, 48);
@@ -104,8 +100,25 @@ SweetieGame.Home.prototype = {
 	this.timer = this.game.time.create(false);
 	this.timer.loop(5000, this.moodDecline, this);
 	this.timer.start();
+
+        //  Press D to toggle the debug display
+        this.debugKey = this.input.keyboard.addKey(Phaser.Keyboard.D);
+        this.debugKey.onDown.add(this.toggleDebug, this);
+	this.game.input.keyboard.removeKeyCapture(Phaser.Keyboard.D);
+    },
+
+    createDebugText: function () {
+	this.dconsole = this.game.add.text(this.padding, this.padding, '',
+					   { font: "20px Arial", fill: "#666666", align: "left" });
+	this.dconsole.setText(V.displayLogClearUpdate());
     },
     
+    toggleDebug: function () {
+	if (V.onScreenDebug()) this.dconsole.kill();
+	V.toggleDebug();
+	if (V.onScreenDebug()) this.createDebugText();
+    },
+
     update: function() {
 	if (V.consoleUpdate) this.dconsole.setText(V.displayLogClearUpdate());
 	if (V.isGameOver()) this.gameOver();
