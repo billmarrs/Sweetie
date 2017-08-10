@@ -3,6 +3,7 @@ SweetieGame.Home = function(game) {
     this.dconsole = null;
     this.padding = 15;
     this.gameOvered = false;
+    this.winningLevel = false;
 };
 
 SweetieGame.Home.prototype = {
@@ -30,7 +31,7 @@ SweetieGame.Home.prototype = {
 					     y: this.padding+hbheight/2,
 					 }
 					);
-	this.myHealthBar.setPercent(V.moodToPercent()); 
+	this.myHealthBar.setPercent(V.moodToPercent());
 	
 	this.moodText = this.add.bitmapText(this.game.width-this.padding*2, this.padding, 'Banner', V.moodToString(), 48);
 	this.moodText.anchor.set(1,0);
@@ -42,9 +43,9 @@ SweetieGame.Home.prototype = {
 	this.sweetie.origheight = this.sweetie.height;
 	this.sweetiescale();
 	this.sweetie.anchor.set(0.5);
- 	this.sweetie.inputEnabled = true;
  	// this.sweetie.input.enableDrag(true);
 	this.sweetie.events.onInputDown.add(this.moodDecline, this);
+
 	this.sweetie.animations.add('meow', [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 ,0], 20, false);
 
 	// Food Dish
@@ -54,7 +55,6 @@ SweetieGame.Home.prototype = {
 	this.dish.anchor.set(0,1);
 	this.dish.tint = 0xFFAAAA;
 	this.dishscale();
-	this.dish.inputEnabled = true;
 	this.dish.events.onInputDown.add(this.touchDish, this);
 	
 	// Petting Hand
@@ -64,7 +64,6 @@ SweetieGame.Home.prototype = {
 	this.hand.anchor.set(1,1);
 	//this.hand.tint = 0xFFAAAA;
 	this.handscale();
-	this.hand.inputEnabled = true;
 	this.hand.events.onInputDown.add(this.touchHand, this);
 	
 	// Sound
@@ -88,10 +87,6 @@ SweetieGame.Home.prototype = {
 	this.game.scale.setResizeCallback(this.orientAll, this);
 	this.game.scale.onSizeChange.add(this.orientAll, this);
 
-	this.timer = this.game.time.create(false);
-	this.timer.loop(5000, this.moodDecline, this);
-	this.timer.start();
-
         //  Press D to toggle the debug display
         this.debugKey = this.input.keyboard.addKey(Phaser.Keyboard.D);
         this.debugKey.onDown.add(this.toggleDebug, this);
@@ -111,13 +106,62 @@ SweetieGame.Home.prototype = {
     },
 
     update: function() {
+	if (V.isLevelStart()) this.levelStartPre();
 	if (V.consoleUpdate) this.dconsole.setText(V.displayLogClearUpdate());
+	if (V.isLevelWon() && !this.winningLevel) this.levelWon();
 	if (V.isGameOver()) this.gameOver();
     },
 
+    levelWon: function() {
+	this.disableInputs();
+	this.winningLevel = true;
+	this.leveltext = this.add.bitmapText(this.game.width/2, this.game.height/2, 'Banner',
+					     'Level '+V.level.toString()+'\nComplete!', 96);
+	this.leveltext.anchor.set(.5);
+	this.tween = this.game.add.tween(this.leveltext).to( { alpha: 0 }, 2000, "Linear", true);
+	this.tween.onComplete.add(this.nextLevel, this);
+    },
+
+    nextLevel: function() {
+	this.winningLevel = false;
+	V.readyForNextLevel();
+	this.myHealthBar.setPercent(V.moodToPercent()); 
+    },
+    
+    levelStartPre: function() {
+	this.leveltext = this.add.bitmapText(this.game.width/2, this.game.height/2, 'Banner', 'Level '+V.level.toString(), 96);
+	this.leveltext.anchor.set(.5);
+	this.tween = this.game.add.tween(this.leveltext).to( { alpha: 0 }, 2000, "Linear", true);
+	this.tween.onComplete.add(this.levelStartGo, this);
+	this.sweetie.inputEnabled = true;
+	this.dish.inputEnabled = true;
+	this.hand.inputEnabled = true;
+    },
+
+    disableInputs: function() {
+	if (typeof this.timer !== "undefined") this.timer.destroy();
+	this.sweetie.inputEnabled = false;
+	this.dish.inputEnabled = false;
+	this.hand.inputEnabled = false;
+    },
+
+    restartInputs: function() {
+	this.sweetie.inputEnabled = true;
+	this.dish.inputEnabled = true;
+	this.hand.inputEnabled = true;
+	this.levelStartGo();
+    },
+    
+    levelStartGo: function() {
+	this.timer = this.game.time.create(false);
+	this.timer.loop(5000, this.moodDecline, this);
+	this.timer.start();
+    },
+    
     gameOver: function() {
 	if (!this.gameOvered) {
 	    V.warn('gameOver');
+	    this.disableInputs();
 	    this.gameover = this.add.bitmapText(this.game.width/2, this.game.height/2, 'Banner', 'Game Over', 96);
 	    this.gameover.anchor.set(.5);
 	    this.tween = this.game.add.tween(this.sweetie).to( { alpha: 0 }, 2000, "Linear", true);
@@ -174,7 +218,8 @@ SweetieGame.Home.prototype = {
 
     touchDish: function(pointer) {
 	V.warn('touchDish');
-	this.state.start('Food');
+	//this.state.start('Food');
+	V.mood = 5;
     },
 
     touchHand: function(pointer) {
