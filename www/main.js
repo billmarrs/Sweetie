@@ -2,15 +2,28 @@ var game = new Phaser.Game("100%", "100%", Phaser.AUTO);
 
 // Persistent storage/utility object
 var V = {
-    mood: 4,
+    defmood: 4,
+    mood: this.defmood,
     maxmood: 5,
+    level: 1,
     game: null,
     debugLevel: "off", // "onscreen", "console" anything else is no logging
     consoleLog: ['start'],
     consoleUpdate: false,
+    startLevel: false,
 
     reset: function() {
-	this.mood = 4;
+	this.mood = this.defmood;
+	this.level = 1;
+	this.startLevel = true;
+    },
+
+    isLevelStart: function() {
+	if (this.startLevel) {
+	    this.startLevel = false;
+	    return true;
+	} else
+	    return false;
     },
 
     toggleDebug: function() {
@@ -91,6 +104,16 @@ var V = {
 
     isGameOver: function() {
 	return (this.mood == 0);
+    },
+
+    isLevelWon: function() {
+	return this.mood == this.maxmood;
+    },
+
+    readyForNextLevel: function() {
+	this.level++;
+	this.mood = this.defmood;
+	this.startLevel = true;
     },
     
     moodToTint: function() {
