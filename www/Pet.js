@@ -19,10 +19,6 @@ SweetieGame.Pet.prototype = {
 
 	this.input.onDown.add(this.goHome, this);
 
-	// Banner text
-// 	this.moneyText = this.add.bitmapText(this.padding, this.padding, 'Banner', '$'+V.money, 48);
-// 	this.moneyText.tint = 0x00ff00;
-// 	this.moneyText.anchor.set(0,0);
 	this.moodText = this.add.bitmapText(this.game.width-this.padding, this.padding, 'Banner', V.mood, 48);
 	this.moodText.anchor.set(1,0);
 
