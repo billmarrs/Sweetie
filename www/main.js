@@ -3,8 +3,9 @@ var game = new Phaser.Game("100%", "100%", Phaser.AUTO);
 // Persistent storage/utility object
 var V = {
     mood: 4,
+    maxmood: 10,
     game: null,
-    debugLevel: "off", // "onscreen", "console" anything else is no logging
+    debugLevel: "onscreen", // "onscreen", "console" anything else is no logging
     consoleLog: ['start'],
     consoleUpdate: false,
 
@@ -45,6 +46,11 @@ var V = {
 	if (wscale < hscale) newscale = wscale; else newscale = hscale;
 	this.warn('scaler('+ratio+', '+origwidth+', '+origheight+') = '+newscale);
 	return newscale;
+    },
+
+    moodToPercent: function() {
+	this.warn('moodToPercent = '+Math.round(100 * this.mood / this.maxmood));
+	return Math.round(100 * this.mood / this.maxmood);
     },
     
     moodToString: function() {

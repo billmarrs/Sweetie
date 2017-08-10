@@ -27,7 +27,22 @@ SweetieGame.Home.prototype = {
 // 	this.moneyText.tint = 0x00ff00;
 // 	this.moneyText.anchor.set(0,0);
 
-	this.moodText = this.add.bitmapText(this.game.width-this.padding, this.padding, 'Banner', V.moodToString(), 48);
+	var hbwidth = 240;
+	var hbheight = 50;
+	this.myHealthBar = new HealthBar(this.game,
+					 {
+					     width: hbwidth, // NYI Scale
+					     height: hbheight,
+					     bg: { color: '#000000' },
+					     bar: { color: '#990303' },
+					     x: this.game.width-this.padding-hbwidth/2,
+					     y: this.padding+hbheight/2,
+					 }
+					);
+	//this.myHealthBar.anchor.set(1,0);
+	this.myHealthBar.setPercent(V.moodToPercent()); 
+	
+	this.moodText = this.add.bitmapText(this.game.width-this.padding*2, this.padding, 'Banner', V.moodToString(), 48);
 	this.moodText.anchor.set(1,0);
 	this.updateMoodDisplay();
 	// NYI random mood init?
@@ -123,7 +138,7 @@ SweetieGame.Home.prototype = {
 	this.hand.x = this.game.width-this.padding; 
 	this.hand.y = this.game.height-this.padding;
 	this.handscale();
-	this.moodText.x = this.game.width-this.padding;
+	this.moodText.x = this.game.width-this.padding*2;
     },
 
     sweetiescale: function() {
@@ -166,6 +181,7 @@ SweetieGame.Home.prototype = {
     updateMoodDisplay: function() {
 	this.moodText.tint = V.moodToTint();
 	this.moodText.setText(V.moodToString());
+	this.myHealthBar.setPercent(V.moodToPercent()); 
     },
     
     moodDecline: function() {
