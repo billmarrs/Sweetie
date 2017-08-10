@@ -18,11 +18,6 @@ SweetieGame.Home.prototype = {
 	
 	if (V.onScreenDebug()) this.createDebugText();
 
-// 	// Banner text
-// 	this.moneyText = this.add.bitmapText(this.padding, this.padding, 'Banner', '$'+V.money, 48);
-// 	this.moneyText.tint = 0x00ff00;
-// 	this.moneyText.anchor.set(0,0);
-
 	var hbwidth = 240;
 	var hbheight = 50;
 	this.myHealthBar = new HealthBar(this.game,
@@ -35,15 +30,11 @@ SweetieGame.Home.prototype = {
 					     y: this.padding+hbheight/2,
 					 }
 					);
-	//this.myHealthBar.anchor.set(1,0);
 	this.myHealthBar.setPercent(V.moodToPercent()); 
 	
 	this.moodText = this.add.bitmapText(this.game.width-this.padding*2, this.padding, 'Banner', V.moodToString(), 48);
 	this.moodText.anchor.set(1,0);
 	this.updateMoodDisplay();
-	// NYI random mood init?
-	// NYI vary color of mood based on severity
-	//this.moodText.tint = 0x00ff00;
 
 	// Sweetie!
 	this.sweetie = this.add.sprite(this.game.width *.5, this.game.height *.5, 'rbf');
@@ -203,9 +194,9 @@ SweetieGame.Home.prototype = {
 	this.meow();
     },
     
-    render: function() {
+    //render: function() {
 	//game.debug.spriteInfo(this.sweetie, this.padding, this.padding);
  	//game.debug.soundInfo(this.meows, this.padding, this.game.height/2);
-    }
+    //}
 
 };
