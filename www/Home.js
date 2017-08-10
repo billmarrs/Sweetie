@@ -44,7 +44,7 @@ SweetieGame.Home.prototype = {
 	this.sweetiescale();
 	this.sweetie.anchor.set(0.5);
  	// this.sweetie.input.enableDrag(true);
-	this.sweetie.events.onInputDown.add(this.moodDecline, this);
+	this.sweetie.events.onInputDown.add(this.moodChange, this);
 
 	this.sweetie.animations.add('meow', [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 ,0], 20, false);
 
@@ -139,7 +139,7 @@ SweetieGame.Home.prototype = {
     },
 
     disableInputs: function() {
-	if (typeof this.timer !== "undefined") this.timer.destroy();
+	if (typeof this.timer !== "undefined") game.time.events.remove(this.timer);
 	this.sweetie.inputEnabled = false;
 	this.dish.inputEnabled = false;
 	this.hand.inputEnabled = false;
@@ -153,9 +153,11 @@ SweetieGame.Home.prototype = {
     },
     
     levelStartGo: function() {
-	this.timer = this.game.time.create(false);
-	this.timer.loop(5000, this.moodDecline, this);
-	this.timer.start();
+	  
+	this.timer = this.game.time.events.add(Phaser.Timer.SECOND * 5, this.moodChange, this);
+// 	this.timer = this.game.time.create(false);
+// 	this.timer.loop(5000, this.moodChange, this);
+//	this.timer.start();
     },
     
     gameOver: function() {
@@ -219,7 +221,8 @@ SweetieGame.Home.prototype = {
     touchDish: function(pointer) {
 	V.warn('touchDish');
 	//this.state.start('Food');
-	V.mood = 5;
+	V.appeased = true;
+	this.moodChange();
     },
 
     touchHand: function(pointer) {
@@ -233,10 +236,16 @@ SweetieGame.Home.prototype = {
 	this.myHealthBar.setPercent(V.moodToPercent()); 
     },
     
-    moodDecline: function() {
-	V.lowerMood();
+    moodChange: function() {
+	var secs = 5;
+	if (V.appeased) {
+	    V.raiseMood();
+	    secs = 1;
+	} else V.lowerMood();
 	this.updateMoodDisplay();
-	this.meow();
+	if (!V.appeased) this.meow();
+	this.game.time.events.remove(this.timer);
+	this.timer = this.game.time.events.add(Phaser.Timer.SECOND * secs, this.moodChange, this);
     },
     
     //render: function() {
