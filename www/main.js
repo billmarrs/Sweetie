@@ -11,11 +11,13 @@ var V = {
     consoleLog: ['start'],
     consoleUpdate: false,
     startLevel: false,
-
+    appeased: false,
+    
     reset: function() {
 	this.mood = this.defmood;
 	this.level = 1;
 	this.startLevel = true;
+	this.appeased = false;
     },
 
     isLevelStart: function() {
@@ -102,6 +104,10 @@ var V = {
 	if (this.mood > 0) this.mood--;
     },
 
+    raiseMood: function() {
+	if (this.mood < this.maxmood) this.mood++;
+    },
+
     isGameOver: function() {
 	return (this.mood == 0);
     },
@@ -113,6 +119,7 @@ var V = {
     readyForNextLevel: function() {
 	this.level++;
 	this.mood = this.defmood;
+	this.appeased = false;
 	this.startLevel = true;
     },
     
